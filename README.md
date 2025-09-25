@@ -37,6 +37,12 @@ som **Lovelace**.
 
 ---
 
+## 📂 Ikoner
+Alla ikoner ligger i /www/pics/clothes/ och kan bytas ut mot egna PNG-filer.
+De nuvarande inkluderar t.ex.: vinterjacka, skaljacka, regnjacka, mössor, vantar, halsduk, sneakers, stövlar och kängor.
+
+---
+
 ## 🔧 Konfiguration
 Exempel på konfiguration i Lovelace:
 
@@ -82,6 +88,3 @@ template:
 
 ---
 
-## 📂 Ikoner
-Alla ikoner ligger i /www/pics/clothes/ och kan bytas ut mot egna PNG-filer.
-De nuvarande inkluderar t.ex.: vinterjacka, skaljacka, regnjacka, mössor, vantar, halsduk, sneakers, stövlar och kängor.
