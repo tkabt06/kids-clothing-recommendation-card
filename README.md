@@ -109,6 +109,19 @@ template:
           {% endif %}
 ```
 
+## 🚀 Kom igång snabbt
+Så här installerar du kortet på enklast möjliga sätt:
+
+1. Kopiera `clothes_card.yaml` till `/config/`.  
+2. Kopiera hela mappen `www/pics/clothes/` till `/config/www/pics/clothes/`.  
+3. Lägg till i din `configuration.yaml`:  
+   ```yaml
+   button_card_templates: !include clothes_card.yaml
+4. Starta om Home Assistant så att ändringen laddas in.
+5. Lägg till kortet i din dashboard via: 
+  type: custom:button-card
+  template: clothes_card
+
 ---
 
 ## ✅ Klart!
