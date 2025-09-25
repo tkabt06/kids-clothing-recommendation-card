@@ -44,16 +44,28 @@ De nuvarande inkluderar t.ex.: vinterjacka, skaljacka, regnjacka, mössor, vanta
 ---
 
 ## 🔧 Konfiguration
-Exempel på konfiguration i Lovelace:
 
-type: custom:kids-clothing-recommendation-card
-entity_weather: weather.home
-entity_temperature: sensor.outdoor_temperature
-entity_uv: sensor.uv_index
-entity_wind: sensor.wind_speed
-entity_season: sensor.season
+### Steg 1 – inkludera template-filen
+I din `configuration.yaml` (eller i en separat templates-fil om du har det) lägger du till:
 
-Dessa byts ut mot dina egna sensorer. 
+```yaml
+button_card_templates: !include clothes_card.yaml
+
+### Steg 2 – använd kortet i Lovelace
+
+När du sedan vill lägga till kortet i din dashboard skriver du:
+
+type: custom:button-card
+template: clothes_card
+variables:
+  weather_entity: weather.home
+  temp_entity: sensor.outdoor_temperature
+  uv_entity: sensor.uv_index
+  wind_entity: sensor.wind_speed
+  season_entity: sensor.season
+
+
+Byt ut sensorerna (weather.home, sensor.outdoor_temperature, osv) mot de entiteter du själv har i ditt Home Assistant.
 
 
 ---
@@ -86,5 +98,4 @@ template:
           {% else %} höst
           {% endif %}
 
----
 
