@@ -1,0 +1,137 @@
+button_card_templates:
+  clothes_card:
+    show_name: false
+    show_label: true
+    variables:
+      weather_entity: weather.home
+      temp_entity: sensor.outdoor_temperature
+      uv_entity: sensor.uv_index
+      wind_entity: sensor.wind_speed
+      season_entity: sensor.season
+    label: |
+      [[[
+        const weather = states[variables.weather_entity]?.state || "unknown";
+        const temp = parseFloat(states[variables.temp_entity]?.state) || 0;
+        const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
+        const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
+        const season = states[variables.season_entity]?.state || "okänd";
+
+        let clothes = [];
+
+        function capFirst(str) {
+          return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // --- JACKOR / BYXOR ---
+        if (weather.includes("snow")) {
+          clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor");
+        } else if (weather.includes("rain")) {
+          clothes.push("Regnjacka","Regnbyxor","Regnhatt","Stövlar");
+        } else {
+          if (temp < -1) {
+            clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor","Halsduk");
+          } else if (temp <= 4) {
+            clothes.push("Skaljacka","Fleece","Tunn mössa","Tunna vantar","Funktionsskor");
+          } else if (temp <= 10) {
+            clothes.push("Skaljacka","Fleece","Funktionsskor");
+          } else if (temp <= 18) {
+            clothes.push("Skaljacka","Sneakers");
+          } else {
+            clothes.push("Skaljacka","Sneakers");
+          }
+        }
+
+        // --- HALSDUK ---
+        if (temp <= -1 || (temp <= 5 && wind > 6)) {
+          if (!clothes.includes("Halsduk")) clothes.push("Halsduk");
+        }
+
+        // --- UV / SOL ---
+        if ((season == "sommar" || season == "var") && uv > 2) {
+          clothes.push("Keps","Solglas");
+        }
+        if ((season == "host" || season == "vinter") && uv > 4) {
+          clothes.push("Solglas");
+        }
+
+        return clothes.map(c => capFirst(c)).join(", ");
+      ]]]
+    custom_fields:
+      title: "Rekommenderad klädsel:"
+      icons: |
+        [[[
+          const weather = states[variables.weather_entity]?.state || "unknown";
+          const temp = parseFloat(states[variables.temp_entity]?.state) || 0;
+          const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
+          const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
+          const season = states[variables.season_entity]?.state || "okänd";
+
+          let clothes = [];
+
+          if (weather.includes("snow")) {
+            clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor");
+          } else if (weather.includes("rain")) {
+            clothes.push("regnjacka","regnbyxor","regnhatt","stovlar");
+          } else {
+            if (temp < -1) {
+              clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor","halsduk");
+            } else if (temp <= 4) {
+              clothes.push("skaljacka","fleece","mossa","vantar","hostsko");
+            } else if (temp <= 10) {
+              clothes.push("skaljacka","fleece","hostsko");
+            } else if (temp <= 18) {
+              clothes.push("skaljacka","sneakers");
+            } else {
+              clothes.push("skaljacka","sneakers");
+            }
+          }
+
+          // --- HALSDUK ---
+          if (temp <= -1 || (temp <= 5 && wind > 6)) {
+            if (!clothes.includes("halsduk")) clothes.push("halsduk");
+          }
+
+          if ((season == "sommar" || season == "var") && uv > 2) {
+            clothes.push("keps","solglas");
+          }
+          if ((season == "host" || season == "vinter") && uv > 4) {
+            clothes.push("solglas");
+          }
+
+          const base = "/local/pics/clothes/";
+          return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+            ${clothes.map(c => `<img src='${base}${c}.png' style="height:65px;width:auto;filter: drop-shadow(0 0 3px white);">`).join("")}
+          </div>`;
+        ]]]
+      note: Men kika gärna prognosen för resten av dagen också
+    styles:
+      grid:
+        - grid-template-areas: '"title" "icons" "l" "note"'
+        - grid-template-rows: auto auto auto auto
+        - grid-template-columns: 1fr
+      custom_fields:
+        title:
+          - justify-self: center
+          - font-size: 16px
+          - font-weight: bold
+          - margin-top: 4px
+          - margin-bottom: 2px
+        icons:
+          - justify-self: center
+          - margin-bottom: 2px
+        note:
+          - font-size: 11px
+          - color: gray
+          - text-align: center
+          - margin-bottom: 4px
+      card:
+        - height: 150px
+        - padding: 4px
+        - display: flex
+        - flex-direction: column
+        - justify-content: space-between
+      label:
+        - font-size: 13px
+        - text-align: center
+        - white-space: normal
+        - margin-bottom: 2px
