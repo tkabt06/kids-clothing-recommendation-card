@@ -119,6 +119,7 @@ Så här installerar du kortet på enklast möjliga sätt:
    button_card_templates: !include clothes_card.yaml
 4. Starta om Home Assistant så att ändringen laddas in.
 5. Lägg till kortet i din dashboard via: 
+  ```yaml
   type: custom:button-card
   template: clothes_card
 
