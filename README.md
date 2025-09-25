@@ -11,6 +11,7 @@ Kortet visar både **ikoner** (egna PNG-bilder) och **text** för att göra det 
   - Vädertyp (regn, snö, sol) ☀️🌧️❄️
   - Vindstyrka 💨
   - UV-index 🕶️
+  - Regnmätare 🌧️
   - Årstid 🍂❄️🌸☀️
 - Egen uppsättning barnvänliga ikoner för kläder (mössor, jackor, skor m.m.).
 - Anpassningsbar för dina egna sensorer.
