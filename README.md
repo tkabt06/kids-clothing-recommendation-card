@@ -25,6 +25,13 @@ Så här kan kortet se ut i din dashboard:
 <img width="499" height="256" alt="image" src="https://github.com/user-attachments/assets/128ff37c-732f-4492-8a2b-935189826e8c" />
 
 
+---
+
+## ☕ Stöd projektet
+Om du gillar det här projektet och vill stötta utvecklingen kan du göra det här:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buy-me-a-coffee&logoColor=black&style=for-the-badge)](https://buymeacoffee.com/karlssontka)  
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?logo=paypal&logoColor=white&style=for-the-badge)](https://paypal.me/tobiaskarlsson307)
 
 ---
 
