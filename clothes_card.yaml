@@ -3,11 +3,20 @@ button_card_templates:
     show_name: false
     show_label: true
     variables:
+      # 👇 HIT SKA DU TITTA 👇
+      # Här anger du dina egna sensorer.
+      # Byt ut exemplen nedan mot det du har i ditt system:
+      # - weather_entity: ditt weather-entity (t.ex. weather.smhi_home)
+      # - temp_entity: din temperatursensor (t.ex. sensor.utomhus_temp)
+      # - uv_entity: din UV-sensor (t.ex. sensor.uv_index)
+      # - wind_entity: din vind-sensor (t.ex. sensor.wind_speed)
+      # - season_entity: din årstid-sensor (om du har en)
       weather_entity: weather.home
       temp_entity: sensor.outdoor_temperature
       uv_entity: sensor.uv_index
       wind_entity: sensor.wind_speed
       season_entity: sensor.season
+
     label: |
       [[[
         const weather = states[variables.weather_entity]?.state || "unknown";
