@@ -11,11 +11,13 @@ button_card_templates:
       # - uv_entity: din UV-sensor (t.ex. sensor.uv_index)
       # - wind_entity: din vind-sensor (t.ex. sensor.wind_speed)
       # - season_entity: din årstid-sensor (om du har en)
+      # - rain_entity: din regnsensor för nederbörd idag (mm)
       weather_entity: weather.home
       temp_entity: sensor.outdoor_temperature
       uv_entity: sensor.uv_index
       wind_entity: sensor.wind_speed
       season_entity: sensor.season
+      rain_entity: sensor.kronholmsgrand_nederbord_idag   # <-- Ny rad
 
     label: |
       [[[
@@ -24,6 +26,7 @@ button_card_templates:
         const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
         const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
         const season = states[variables.season_entity]?.state || "okänd";
+        const rainToday = parseFloat(states[variables.rain_entity]?.state) || 0; // <-- Ny
 
         let clothes = [];
 
@@ -34,7 +37,7 @@ button_card_templates:
         // --- JACKOR / BYXOR ---
         if (weather.includes("snow")) {
           clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor");
-        } else if (weather.includes("rain")) {
+        } else if (weather.includes("rain") || rainToday >= 3) {   // <-- Uppdaterat
           clothes.push("Regnjacka","Regnbyxor","Regnhatt","Stövlar");
         } else {
           if (temp < -1) {
@@ -74,12 +77,13 @@ button_card_templates:
           const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
           const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
           const season = states[variables.season_entity]?.state || "okänd";
+          const rainToday = parseFloat(states[variables.rain_entity]?.state) || 0; // <-- Ny
 
           let clothes = [];
 
           if (weather.includes("snow")) {
             clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor");
-          } else if (weather.includes("rain")) {
+          } else if (weather.includes("rain") || rainToday >= 3) {   // <-- Uppdaterat
             clothes.push("regnjacka","regnbyxor","regnhatt","stovlar");
           } else {
             if (temp < -1) {
