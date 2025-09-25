@@ -22,7 +22,8 @@ Kortet visar både **ikoner** (egna PNG-bilder) och **text** för att göra det 
 ## 📸 Exempel
 Så här kan kortet se ut i din dashboard:
 
-<img width="519" height="164" alt="image" src="https://github.com/user-attachments/assets/e848af02-4775-44b0-adfb-61dd9730ed35" />
+<img width="499" height="256" alt="image" src="https://github.com/user-attachments/assets/128ff37c-732f-4492-8a2b-935189826e8c" />
+
 
 
 ---
