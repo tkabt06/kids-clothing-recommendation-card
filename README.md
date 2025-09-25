@@ -78,6 +78,7 @@ variables:
   uv_entity: sensor.uv_index
   wind_entity: sensor.wind_speed
   season_entity: sensor.season
+  rain_entity: sensor.rain_today
 ```
 
 Byt ut dessa till dina egna entiteter.
