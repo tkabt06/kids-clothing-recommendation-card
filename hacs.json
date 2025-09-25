@@ -1,7 +1,7 @@
 {
   "name": "Kids Clothing Recommendation Card",
-  "content_in_root": false,
-  "render_readme": true,
-  "domains": ["lovelace"],
-  "homeassistant": "2023.0.0"
+  "content_in_root": true,
+  "filename": "clothes_card.yaml",
+  "render_readme": true
 }
+
