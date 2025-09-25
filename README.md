@@ -22,7 +22,8 @@ Kortet visar både **ikoner** (egna PNG-bilder) och **text** för att göra det 
 ## 📸 Exempel
 Så här kan kortet se ut i din dashboard:
 
-*(lägg in en screenshot här från din HA när kortet körs)*
+<img width="519" height="164" alt="image" src="https://github.com/user-attachments/assets/e848af02-4775-44b0-adfb-61dd9730ed35" />
+
 
 ---
 
@@ -122,7 +123,7 @@ Så här installerar du kortet på enklast möjliga sätt:
   ```yaml
   type: custom:button-card
   template: clothes_card
-
+  ```
 ---
 
 ## ✅ Klart!
