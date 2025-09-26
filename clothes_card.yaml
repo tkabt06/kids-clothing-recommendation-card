@@ -5,12 +5,17 @@ button_card_templates:
     variables:
       # 👇 HIT SKA DU TITTA 👇
       # Här anger du dina egna sensorer.
+      # Byt ut exemplen nedan mot det du har i ditt system:
+      # - weather_entity: ditt weather-entity (t.ex. weather.smhi_home)
+      # - temp_entity: din temperatursensor (t.ex. sensor.utomhus_temp)
+      # - uv_entity: din UV-sensor (t.ex. sensor.uv_index)
+      # - wind_entity: din vind-sensor (t.ex. sensor.wind_speed)
+      # - season_entity: din årstid-sensor (om du har en)
       weather_entity: weather.home
       temp_entity: sensor.outdoor_temperature
       uv_entity: sensor.uv_index
       wind_entity: sensor.wind_speed
       season_entity: sensor.season
-      rain_entity: sensor.rain_today  # total mm nederbörd idag (eller senaste 24h)
 
     label: |
       [[[
@@ -19,12 +24,6 @@ button_card_templates:
         const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
         const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
         const season = states[variables.season_entity]?.state || "okänd";
-        const rain = parseFloat(states[variables.rain_entity]?.state) || 0;
-
-        // --- Upplevd temperatur ---
-        let upplevdTemp = temp;
-        if (wind >= 8) upplevdTemp -= 2;
-        if (wind >= 12) upplevdTemp -= 2;
 
         let clothes = [];
 
@@ -32,52 +31,28 @@ button_card_templates:
           return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
-        // --- JACKA ---
-        if (weather.includes("snow") || upplevdTemp < -1) {
-          clothes.push("Vinterjacka");
-        } else if (upplevdTemp <= 10) {
-          clothes.push("Skaljacka","Fleece");
-        } else {
-          clothes.push("Skaljacka");
-        }
-
-        // --- BYXOR ---
+        // --- JACKOR / BYXOR ---
         if (weather.includes("snow")) {
-          clothes.push("Termobyxor");
-        } else if (weather.includes("rain") || rain >= 3) {
-          clothes.push("Regnbyxor");
-        } else if (upplevdTemp <= 10) {
-          clothes.push("Skalbyxor");
-        }
-
-        // --- SKOR ---
-        if (weather.includes("snow") || upplevdTemp < -1) {
-          clothes.push("Kängor");
-        } else if (weather.includes("rain") || rain >= 3) {
-          clothes.push("Stövlar");
-        } else if (upplevdTemp <= 10) {
-          clothes.push("Funktionsskor");
+          clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor");
+        } else if (weather.includes("rain")) {
+          clothes.push("Regnjacka","Regnbyxor","Regnhatt","Stövlar");
         } else {
-          clothes.push("Sneakers");
-        }
-
-        // --- MÖSSA ---
-        if (upplevdTemp < -1) {
-          clothes.push("Vintermössa");
-        } else if (upplevdTemp <= 4 || wind > 8) {
-          clothes.push("Tunn mössa");
-        }
-
-        // --- VANTAR ---
-        if (upplevdTemp < -1) {
-          clothes.push("Vintervantar");
-        } else if (upplevdTemp <= 4 || wind > 8) {
-          clothes.push("Tunna vantar");
+          if (temp < -1) {
+            clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor","Halsduk");
+          } else if (temp <= 8) {
+            clothes.push("Skaljacka","Skalbyxor","Tunn mössa","Tunna vantar","Funktionsskor");
+          } else if (temp <= 15) {
+            clothes.push("Fleece","Funktionsskor");
+          } else if (temp <= 18) {
+            clothes.push("Skaljacka","Sneakers");
+          } else {
+            clothes.push("Skaljacka","Sneakers");
+          }
         }
 
         // --- HALSDUK ---
-        if (upplevdTemp < -1 || (upplevdTemp <= 5 && wind > 6)) {
-          clothes.push("Halsduk");
+        if (temp <= -1 || (temp <= 5 && wind > 6)) {
+          if (!clothes.includes("Halsduk")) clothes.push("Halsduk");
         }
 
         // --- UV / SOL ---
@@ -87,6 +62,17 @@ button_card_templates:
         if ((season == "host" || season == "vinter") && uv > 4) {
           clothes.push("Solglas");
         }
+
+        // --- PRIO ORDNING ---
+        const priority = ["Kängor","Stövlar","Funktionsskor","Sneakers",
+                          "Vinterjacka","Regnjacka","Skaljacka","Fleece",
+                          "Termobyxor","Regnbyxor","Skalbyxor",
+                          "Vintermössa","Tunn mössa",
+                          "Vintervantar","Tunna vantar",
+                          "Halsduk","Keps","Solglas"];
+
+        clothes = clothes.sort((a,b) => priority.indexOf(a) - priority.indexOf(b));
+        clothes = clothes.slice(0,5);
 
         return clothes.map(c => capFirst(c)).join(", ");
       ]]]
@@ -99,64 +85,31 @@ button_card_templates:
           const uv = parseFloat(states[variables.uv_entity]?.state) || 0;
           const wind = parseFloat(states[variables.wind_entity]?.state) || 0;
           const season = states[variables.season_entity]?.state || "okänd";
-          const rain = parseFloat(states[variables.rain_entity]?.state) || 0;
-
-          // --- Upplevd temperatur ---
-          let upplevdTemp = temp;
-          if (wind >= 8) upplevdTemp -= 2;
-          if (wind >= 12) upplevdTemp -= 2;
 
           let clothes = [];
 
-          // --- JACKA ---
-          if (weather.includes("snow") || upplevdTemp < -1) {
-            clothes.push("vinterjacka");
-          } else if (upplevdTemp <= 10) {
-            clothes.push("skaljacka","fleece");
-          } else {
-            clothes.push("skaljacka");
-          }
-
-          // --- BYXOR ---
           if (weather.includes("snow")) {
-            clothes.push("termobyxor");
-          } else if (weather.includes("rain") || rain >= 3) {
-            clothes.push("regnbyxor");
-          } else if (upplevdTemp <= 10) {
-            clothes.push("skalbyxor");
-          }
-
-          // --- SKOR ---
-          if (weather.includes("snow") || upplevdTemp < -1) {
-            clothes.push("kangor");
-          } else if (weather.includes("rain") || rain >= 3) {
-            clothes.push("stovlar");
-          } else if (upplevdTemp <= 10) {
-            clothes.push("hostsko");
+            clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor");
+          } else if (weather.includes("rain")) {
+            clothes.push("regnjacka","regnbyxor","regnhatt","stovlar");
           } else {
-            clothes.push("sneakers");
+            if (temp < -1) {
+              clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor","halsduk");
+            } else if (temp <= 8) {
+              clothes.push("skaljacka","skalbyxor","mossa","vantar","hostsko");
+            } else if (temp <= 15) {
+              clothes.push("fleece","hostsko");
+            } else if (temp <= 18) {
+              clothes.push("skaljacka","sneakers");
+            } else {
+              clothes.push("skaljacka","sneakers");
+            }
           }
 
-          // --- MÖSSA ---
-          if (upplevdTemp < -1) {
-            clothes.push("vintermossa");
-          } else if (upplevdTemp <= 4 || wind > 8) {
-            clothes.push("mossa");
+          if (temp <= -1 || (temp <= 5 && wind > 6)) {
+            if (!clothes.includes("halsduk")) clothes.push("halsduk");
           }
 
-          // --- VANTAR ---
-          if (upplevdTemp < -1) {
-            clothes.push("vintervantar");
-          } else if (upplevdTemp <= 4 || wind > 8) {
-            clothes.push("vantar");
-          }
-
-          // --- HALSDUK ---
-          if (upplevdTemp < -1 || (upplevdTemp <= 5 && wind > 6)) {
-            clothes.push("halsduk");
-          }
-
-          // --- UV / SOL ---
           if ((season == "sommar" || season == "var") && uv > 2) {
             clothes.push("keps","solglas");
           }
@@ -164,9 +117,19 @@ button_card_templates:
             clothes.push("solglas");
           }
 
+          const priority = ["kangor","stovlar","hostsko","sneakers",
+                            "vinterjacka","regnjacka","skaljacka","fleece",
+                            "termobyxor","regnbyxor","skalbyxor",
+                            "vintermossa","mossa",
+                            "vintervantar","vantar",
+                            "halsduk","keps","solglas"];
+
+          clothes = clothes.sort((a,b) => priority.indexOf(a) - priority.indexOf(b));
+          clothes = clothes.slice(0,5);
+
           const base = "/local/pics/clothes/";
           return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
-            ${clothes.map(c => `<img src='${base}${c}.png' style="height:65px;width:auto;filter: drop-shadow(0 0 3px white);">`).join("")}
+            ${clothes.map(c => `<img src='${base}${c}.png' style="height:85px;width:auto;filter: drop-shadow(0 0 3px white);">`).join("")}
           </div>`;
         ]]]
       note: Men kika gärna prognosen för resten av dagen också
@@ -191,7 +154,7 @@ button_card_templates:
           - text-align: center
           - margin-bottom: 4px
       card:
-        - height: 150px
+        - height: 180px
         - padding: 4px
         - display: flex
         - flex-direction: column
@@ -201,3 +164,12 @@ button_card_templates:
         - text-align: center
         - white-space: normal
         - margin-bottom: 2px
+    card_mod:
+      style: |
+        ha-card {
+          box-shadow: inset 2px 2px 3px rgba(0,0,0,0.9), inset -2px -2px 3px rgba(255,255,255,0.05);
+          background: rgba(0,0,0,0.05);
+          border-radius: 18px;
+          backdrop-filter: none;
+          border: solid 0px white;
+        }
