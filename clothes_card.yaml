@@ -129,7 +129,7 @@ button_card_templates:
 
           const base = "/local/pics/clothes/";
           return `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
-            ${clothes.map(c => `<img src='${base}${c}.png' style="height:85px;width:auto;filter: drop-shadow(0 0 3px white);">`).join("")}
+            ${clothes.map(c => `<img src='${base}${c}.png' style="height:75px;width:auto;filter: drop-shadow(0 0 3px white);">`).join("")}
           </div>`;
         ]]]
       note: Men kika gärna prognosen för resten av dagen också
@@ -164,12 +164,3 @@ button_card_templates:
         - text-align: center
         - white-space: normal
         - margin-bottom: 2px
-    card_mod:
-      style: |
-        ha-card {
-          box-shadow: inset 2px 2px 3px rgba(0,0,0,0.9), inset -2px -2px 3px rgba(255,255,255,0.05);
-          background: rgba(0,0,0,0.05);
-          border-radius: 18px;
-          backdrop-filter: none;
-          border: solid 0px white;
-        }
