@@ -9,7 +9,7 @@ button_card_templates:
       temp_entity: sensor.outdoor_temperature
       uv_entity: sensor.uv_index
       wind_entity: sensor.wind_speed
-      rain_entity: sensor.rain_day  # byt mot din egen regnmätare
+      rain_entity: sensor.rain_day  
       season_entity: sensor.season
 
     label: |
@@ -29,18 +29,32 @@ button_card_templates:
 
         // --- JACKOR / BYXOR / SKOR ---
         if (weather.includes("snow") || temp < -1) {
-          clothes.push("Vinterjacka","Termobyxor","Vintermössa","Vintervantar","Kängor");
+          clothes.push("Vinterjacka","Termobyxor","Kängor");
           if (temp < -1) clothes.push("Halsduk");
         } else if (temp <= 2) {
-          clothes.push("Skaljacka","Fleece","Skalbyxor","Tunn mössa","Tunna vantar","Funktionsskor");
+          clothes.push("Skaljacka","Fleece","Skalbyxor","Funktionsskor");
         } else if (temp <= 8) {
-          clothes.push("Skaljacka","Skalbyxor","Tunn mössa","Tunna vantar","Funktionsskor");
+          clothes.push("Skaljacka","Skalbyxor","Funktionsskor");
         } else if (temp <= 15) {
           clothes.push("Skaljacka","Funktionsskor");
         } else if (temp <= 18) {
           clothes.push("Fleece","Sneakers");
         } else {
           clothes.push("Skaljacka","Sneakers");
+        }
+
+        // --- MÖSSA ---
+        if (temp <= -1) {
+          clothes.push("Vintermössa");
+        } else if (temp <= 10 || (temp <= 12 && wind > 6)) {
+          clothes.push("Tunn mössa");
+        }
+
+        // --- VANTAR ---
+        if (temp <= -1) {
+          clothes.push("Vintervantar");
+        } else if (temp <= 8) {
+          clothes.push("Tunna vantar");
         }
 
         // --- HALSDUK ---
@@ -90,18 +104,32 @@ button_card_templates:
           let clothes = [];
 
           if (weather.includes("snow") || temp < -1) {
-            clothes.push("vinterjacka","termobyxor","vintermossa","vintervantar","kangor");
+            clothes.push("vinterjacka","termobyxor","kangor");
             if (temp < -1) clothes.push("halsduk");
           } else if (temp <= 2) {
-            clothes.push("skaljacka","fleece","skalbyxor","mossa","vantar","hostsko");
+            clothes.push("skaljacka","fleece","skalbyxor","hostsko");
           } else if (temp <= 8) {
-            clothes.push("skaljacka","skalbyxor","mossa","vantar","hostsko");
+            clothes.push("skaljacka","skalbyxor","hostsko");
           } else if (temp <= 15) {
             clothes.push("skaljacka","hostsko");
           } else if (temp <= 18) {
             clothes.push("fleece","sneakers");
           } else {
             clothes.push("skaljacka","sneakers");
+          }
+
+          // Mössa
+          if (temp <= -1) {
+            clothes.push("vintermossa");
+          } else if (temp <= 10 || (temp <= 12 && wind > 6)) {
+            clothes.push("mossa");
+          }
+
+          // Vantar
+          if (temp <= -1) {
+            clothes.push("vintervantar");
+          } else if (temp <= 8) {
+            clothes.push("vantar");
           }
 
           if (temp <= -1 || (temp <= 5 && wind > 6)) {
@@ -166,4 +194,3 @@ button_card_templates:
         - text-align: center
         - white-space: normal
         - margin-bottom: 2px
-
