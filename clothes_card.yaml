@@ -9,7 +9,7 @@ button_card_templates:
       temp_entity: sensor.outdoor_temperature
       uv_entity: sensor.uv_index
       wind_entity: sensor.wind_speed
-      rain_entity: sensor.rain_day  
+      rain_entity: sensor.rain_day   # byt till din egen regnsensor, t.ex. sensor.kronholmsgrand_nederbord_idag
       season_entity: sensor.season
 
     label: |
@@ -75,7 +75,7 @@ button_card_templates:
           clothes.push("Solglas");
         }
 
-        // --- PRIO ---
+        // --- PRIO ORDNING ---
         const priority = ["Kängor","Stövlar","Funktionsskor","Sneakers",
                           "Vinterjacka","Regnjacka","Skaljacka","Fleece",
                           "Termobyxor","Regnbyxor","Skalbyxor",
